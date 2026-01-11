@@ -3,7 +3,6 @@
 **RaiFocus** is a stunning, premium productivity desktop application built with Electron.js. It combines a powerful **Time Tracker**, a hierarchical **Todo System**, and an automated **Break Timer (Pomodoro)** to help you stay focused and manage your work efficiently.
 
 ![RaiFocus Mockup](https://raw.githubusercontent.com/bdraihan71/RaiFocus/main/assets/readme_banner.png)
-*(Note: Replace with actual screenshot path)*
 
 ## ✨ Key Features
 
