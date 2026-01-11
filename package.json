@@ -1,0 +1,50 @@
+{
+  "name": "raifocus-productivity",
+  "version": "1.0.0",
+  "description": "A beautiful productivity desktop app with time tracking, todos, and break reminders",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win"
+  },
+  "keywords": [
+    "productivity",
+    "time-tracker",
+    "todo",
+    "pomodoro",
+    "electron"
+  ],
+  "author": "Raihan",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "sql.js": "^1.10.3",
+    "chart.js": "^4.4.1",
+    "dayjs": "^1.11.10"
+  },
+  "build": {
+    "appId": "com.raifocus.productivity",
+    "productName": "RaiFocus",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/app-icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ]
+  }
+}

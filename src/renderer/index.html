@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaiFocus - Productivity App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/timeTracker.css">
+  <link rel="stylesheet" href="styles/todos.css">
+  <link rel="stylesheet" href="styles/timer.css">
+  <link rel="stylesheet" href="styles/analytics.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="url(#gradient)" stroke-width="2" />
+            <path d="M16 8V16L21 19" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" />
+            <defs>
+              <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#667eea" />
+                <stop offset="100%" stop-color="#764ba2" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <h1>RaiFocus</h1>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="dashboard">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-view="time-tracker">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Time Tracker</span>
+        </button>
+
+        <button class="nav-item" data-view="todos">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+            <path fill-rule="evenodd"
+              d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Todos</span>
+        </button>
+
+        <button class="nav-item" data-view="break-timer">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Break Timer</span>
+        </button>
+
+        <button class="nav-item" data-view="analytics">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+          </svg>
+          <span>Analytics</span>
+        </button>
+
+        <button class="nav-item" data-view="settings">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+              clip-rule="evenodd" />
+          </svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="active-timer-indicator" id="sidebarActiveTimer" style="display: none;">
+          <div class="pulse-dot"></div>
+          <div class="timer-info">
+            <span class="timer-category">Coding</span>
+            <span class="timer-duration">00:00:00</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Dashboard View -->
+      <div class="view active" id="dashboard-view">
+        <div class="view-header">
+          <h2>Dashboard</h2>
+          <p class="view-subtitle">Your productivity overview</p>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 id="todayHours">0h 0m</h3>
+              <p>Today's Focus Time</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 id="todayTasks">0</h3>
+              <p>Tasks Completed</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 id="todaySessions">0</h3>
+              <p>Focus Sessions</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                <path
+                  d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 id="activeCategories">0</h3>
+              <p>Active Projects</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-charts">
+          <div class="chart-card">
+            <h3>Today's Time Distribution</h3>
+            <canvas id="todayChart"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <h3>Weekly Overview</h3>
+            <canvas id="weeklyChart"></canvas>
+          </div>
+        </div>
+
+        <div class="recent-activity">
+          <h3>Recent Activity</h3>
+          <div id="recentActivityList" class="activity-list">
+            <!-- Activity items will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Time Tracker View -->
+      <div class="view" id="time-tracker-view">
+        <div class="view-header">
+          <h2>Time Tracker</h2>
+          <button class="btn btn-primary" id="addCategoryBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+            </svg>
+            Add Project
+          </button>
+        </div>
+
+        <div class="time-tracker-container">
+          <div class="active-timer-section" id="activeTimerSection" style="display: none;">
+            <div class="active-timer-card">
+              <div class="timer-display">
+                <h3 id="activeTimerCategory">Coding</h3>
+                <div class="timer-time" id="activeTimerDisplay">00:00:00</div>
+              </div>
+              <div class="timer-controls">
+                <button class="btn btn-danger" id="stopTimerBtn">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <rect x="4" y="4" width="8" height="8" rx="1" />
+                  </svg>
+                  Stop Timer
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="categories-grid" id="categoriesGrid">
+            <!-- Categories will be inserted here -->
+          </div>
+
+          <div class="time-history">
+            <h3>Recent Time Entries</h3>
+            <div id="timeEntriesList" class="entries-list">
+              <!-- Time entries will be inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Todos View -->
+      <div class="view" id="todos-view">
+        <div class="view-header">
+          <h2>Todo List</h2>
+          <button class="btn btn-secondary" id="manageTodoProjectsBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path width="16" height="16" d="M3 3h10v2H3zM3 7h10v2H3zM3 11h10v2H3z" />
+            </svg>
+            Manage Projects
+          </button>
+        </div>
+
+        <div class="todos-container">
+          <!-- Quick Add Section -->
+          <div class="quick-add-container"
+            style="display: flex; gap: 10px; margin-bottom: 20px; background: var(--bg-card); padding: 16px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <select id="quickAddProject" class="quick-add-select"
+              style="width: 150px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: #2a2a3e; color: #fff; outline: none; cursor: pointer;">
+              <option value="">Select Project</option>
+            </select>
+            <input type="text" id="quickAddTitle" placeholder="What needs to be done?"
+              style="flex: 1; padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: #2a2a3e; color: #fff; outline: none;">
+            <button id="quickAddBtn" class="btn btn-primary" style="padding: 0 20px;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z" />
+              </svg>
+            </button>
+          </div>
+          <div class="todos-filters-header"
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div class="todos-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="todo">To Do</button>
+              <button class="filter-btn" data-filter="in_progress">In Progress</button>
+              <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+            <div class="project-filter">
+              <select id="todoProjectFilter" class="form-select"
+                style="padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text-primary); outline: none;">
+                <option value="all">All Projects</option>
+                <!-- Options populated via JS -->
+              </select>
+            </div>
+          </div>
+
+          <div id="todosList" class="todos-list">
+            <!-- Todos will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Break Timer View -->
+      <div class="view" id="break-timer-view">
+        <div class="view-header">
+          <h2>Break Timer</h2>
+          <button class="btn btn-secondary" id="timerSettingsBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 4.754a3.246 3.246 0 100 6.492 3.246 3.246 0 000-6.492zM5.754 8a2.246 2.246 0 114.492 0 2.246 2.246 0 01-4.492 0z" />
+              <path
+                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 01-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 01-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 01.52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 011.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 011.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 01.52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 01-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 01-1.255-.52l-.094-.319z" />
+            </svg>
+            Settings
+          </button>
+        </div>
+
+        <div class="break-timer-container">
+          <div class="timer-circle">
+            <svg class="timer-svg" viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#667eea" />
+                  <stop offset="100%" stop-color="#764ba2" />
+                </linearGradient>
+              </defs>
+              <circle class="timer-bg" cx="100" cy="100" r="90" />
+              <circle class="timer-progress" id="timerProgress" cx="100" cy="100" r="90" />
+            </svg>
+            <div class="timer-content">
+              <div class="timer-label" id="timerLabel">Work Time</div>
+              <div class="timer-countdown" id="timerCountdown">40:00</div>
+              <div class="session-counter" id="sessionCounter">Session 1/4</div>
+            </div>
+          </div>
+
+          <div class="timer-config-summary"
+            style="display: flex; gap: 20px; margin: 10px 0 30px 0; font-size: 13px; color: var(--text-secondary); background: rgba(255,255,255,0.05); padding: 10px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+            <div id="configWork">Focus: 40m</div>
+            <div id="configShort">Short Break: 5m</div>
+            <div id="configLong">Long Break: 15m</div>
+          </div>
+
+          <div class="timer-buttons">
+            <button class="btn btn-lg btn-primary" id="startBreakTimerBtn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+              </svg>
+              Start
+            </button>
+            <button class="btn btn-lg btn-secondary" id="pauseBreakTimerBtn" style="display: none;">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  d="M5 4a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V4zM13 4a2 2 0 012-2h2a2 2 0 012 2v12a2 2 0 01-2 2h-2a2 2 0 01-2-2V4z" />
+              </svg>
+              Pause
+            </button>
+            <button class="btn btn-lg btn-danger" id="resetBreakTimerBtn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                  clip-rule="evenodd" />
+              </svg>
+              Reset
+            </button>
+            <button class="btn btn-lg btn-warning" id="skipBreakTimerBtn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798l-5.445-3.63z" />
+              </svg>
+              Skip
+            </button>
+          </div>
+
+          <div class="session-stats">
+            <div class="stat-item">
+              <span class="stat-label">Today's Sessions</span>
+              <span class="stat-value" id="todaySessionsCount">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Work Time</span>
+              <span class="stat-value" id="totalWorkTime">0h 0m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics & Reports View -->
+      <div class="view" id="analytics-view">
+        <div class="view-header">
+          <h2>Analytics & Reports</h2>
+        </div>
+
+        <div class="analytics-container">
+          <!-- Controls Section -->
+          <div class="report-controls">
+            <div class="control-group">
+              <label>Period:</label>
+              <div class="period-buttons">
+                <button class="btn btn-sm active" data-range="today">Today</button>
+                <button class="btn btn-sm" data-range="week">This Week</button>
+                <button class="btn btn-sm" data-range="month">This Month</button>
+                <button class="btn btn-sm" data-range="custom">Custom</button>
+              </div>
+            </div>
+
+            <div class="control-group custom-date-group" id="customDateGroup" style="display: none;">
+              <label>Date Range:</label>
+              <div class="date-inputs">
+                <input type="date" id="reportStartDate">
+                <span>to</span>
+                <input type="date" id="reportEndDate">
+                <button class="btn btn-sm btn-primary" id="generateCustomReportBtn">Go</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <button class="btn btn-sm btn-secondary" id="exportReportBtn">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" style="margin-right:4px">
+                  <path d="M7 10.5l-3.5-3.5h2.5V2h2v5h2.5L7 10.5zm-5 2v-2h10v2H2z" />
+                </svg>
+                Export CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Summary Cards -->
+          <div class="report-summary-cards">
+            <div class="metrics-card">
+              <h4>Total Time</h4>
+              <div class="metrics-value" id="totalReportTime">0h 0m</div>
+            </div>
+            <div class="metrics-card">
+              <h4>Top Project</h4>
+              <div class="metrics-value" id="topReportCategory">-</div>
+            </div>
+            <div class="metrics-card">
+              <h4>Sessions</h4>
+              <div class="metrics-value" id="totalReportSessions">0</div>
+            </div>
+          </div>
+
+          <!-- Charts Grid -->
+          <div class="analytics-grid">
+            <div class="chart-card large">
+              <h3>Time Distribution (Projects)</h3>
+              <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Daily Activity Trend</h3>
+              <canvas id="dailyChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Detailed Task Report Table -->
+          <div class="detailed-report-section">
+            <h3>Detailed Task Report</h3>
+            <div class="table-container">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Project</th>
+                    <th>Task / Note</th>
+                    <th>Duration</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                  <!-- Rows will be populated here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings View -->
+      <div class="view" id="settings-view">
+        <div class="view-header">
+          <h2>Settings</h2>
+          <p class="view-subtitle">Customize your focus experience</p>
+        </div>
+
+        <div class="settings-container"
+          style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+          <!-- Break Timer Section -->
+          <div class="settings-section"
+            style="background: #1a1a2e; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 30px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px;">
+              <div style="padding: 10px; background: var(--primary-gradient); border-radius: 12px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                </svg>
+              </div>
+              <div>
+                <h3 style="margin: 0; font-size: 20px; font-weight: 700; color: #fff;">Break Timer</h3>
+                <p style="margin: 0; font-size: 13px; color: var(--text-secondary);">Configure Pomodoro session lengths
+                </p>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div class="setting-item">
+                <label for="workDurationInput">Work Duration (min)</label>
+                <input type="number" id="workDurationInput" min="1" max="120" value="40"
+                  style="padding: 12px; background: #0f0f1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;">
+              </div>
+              <div class="setting-item">
+                <label for="shortBreakInput">Short Break (min)</label>
+                <input type="number" id="shortBreakInput" min="1" max="30" value="5"
+                  style="padding: 12px; background: #0f0f1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;">
+              </div>
+              <div class="setting-item">
+                <label for="longBreakInput">Long Break (min)</label>
+                <input type="number" id="longBreakInput" min="1" max="60" value="15"
+                  style="padding: 12px; background: #0f0f1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;">
+              </div>
+              <div class="setting-item">
+                <label for="sessionsBeforeLongBreak">Sessions before long break</label>
+                <input type="number" id="sessionsBeforeLongBreak" min="1" max="10" value="4"
+                  style="padding: 12px; background: #0f0f1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;">
+              </div>
+            </div>
+
+            <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 15px;">
+              <label class="checkbox-label" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="soundEnabledCheck" checked>
+                <span style="font-size: 14px; color: var(--text-secondary);">Enable sound notifications</span>
+              </label>
+              <label class="checkbox-label" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="autoStartWorkCheck">
+                <span style="font-size: 14px; color: var(--text-secondary);">Auto-start work sessions</span>
+              </label>
+              <label class="checkbox-label" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                <input type="checkbox" id="autoStartBreakCheck" checked>
+                <span style="font-size: 14px; color: var(--text-secondary);">Auto-start break sessions</span>
+              </label>
+            </div>
+
+            <button class="btn btn-primary" id="saveSettingsBtn"
+              style="margin-top: 30px; width: 100%; padding: 14px; font-weight: 700; letter-spacing: 0.5px;">SAVE
+              CONFIGURATION</button>
+          </div>
+
+          <!-- App Info Section -->
+          <div class="settings-section"
+            style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; text-align: center;">
+            <p style="margin: 0; color: var(--text-muted); font-size: 13px;">RaiFocus version 1.0.0 • Made with ❤️</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal" id="categoryModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Project</h3>
+        <button class="modal-close" id="closeCategoryModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="categoryName">Project Name</label>
+          <input type="text" id="categoryName" placeholder="e.g., Coding, Design, Meeting">
+        </div>
+        <div class="form-group">
+          <label for="categoryColor">Color</label>
+          <div class="color-picker">
+            <input type="color" id="categoryColor" value="#667eea">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelCategoryBtn">Cancel</button>
+        <button class="btn btn-primary" id="saveCategoryBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="todoModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="todoModalTitle">Add Task</h3>
+        <button class="modal-close" id="closeTodoModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="todoTitle">Task Title</label>
+          <input type="text" id="todoTitle" placeholder="What needs to be done?">
+        </div>
+        <div class="form-group">
+          <label for="todoCategory">Project</label>
+          <select id="todoCategory">
+            <option value="">No Category</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="todoPriority">Priority</label>
+          <select id="todoPriority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="todoDueDate">Due Date</label>
+          <input type="date" id="todoDueDate">
+        </div>
+        <div class="form-group">
+          <label for="todoNotes">Notes</label>
+          <textarea id="todoNotes" rows="3" placeholder="Additional details..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelTodoBtn">Cancel</button>
+        <button class="btn btn-primary" id="saveTodoBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manage Todo Projects Modal -->
+  <div class="modal" id="manageTodoProjectsModal">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>Manage Projects</h3>
+        <button class="modal-close" id="closeManageTodoProjectsModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="display: flex; gap: 10px; align-items: flex-end;">
+          <div style="flex: 1;">
+            <label for="newTodoProjectName">New Project Name</label>
+            <input type="text" id="newTodoProjectName" placeholder="Project Name">
+          </div>
+          <div>
+            <label for="newTodoProjectColor">Color</label>
+            <div class="color-picker" style="width: 50px; height: 46px;">
+              <input type="color" id="newTodoProjectColor" value="#667eea">
+            </div>
+          </div>
+          <button class="btn btn-primary" id="addTodoProjectBtn" style="padding: 14px 20px;">Add</button>
+        </div>
+        <div style="margin-top: 20px;">
+          <h4 style="margin-bottom: 10px; color: var(--text-secondary);">Existing Projects</h4>
+          <div id="todoProjectsList"
+            style="display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto;">
+            <!-- List populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Alert Modal -->
+  <div class="modal" id="customAlertModal">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <div class="modal-header" style="justify-content: center; border-bottom: none; padding-bottom: 0;">
+        <h3 id="alertTitle" style="font-size: 18px;">Notification</h3>
+      </div>
+      <div class="modal-body" style="padding-top: 10px; padding-bottom: 20px;">
+        <p id="alertMessage" style="color: var(--text-secondary); font-size: 15px; line-height: 1.5;"></p>
+      </div>
+      <div class="modal-footer" style="justify-content: center; border-top: none; padding-top: 0;">
+        <button class="btn btn-primary" id="closeAlertBtn" style="min-width: 100px;">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+  <script src="scripts/timeTracker.js"></script>
+  <script src="scripts/todoManager.js"></script>
+  <script src="scripts/breakTimer.js"></script>
+  <script src="scripts/analytics.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+
+</html>
