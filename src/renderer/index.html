@@ -506,10 +506,14 @@
             </div>
 
             <div style="margin-top: 25px; display: flex; flex-direction: column; gap: 15px;">
-              <label class="checkbox-label" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
-                <input type="checkbox" id="soundEnabledCheck" checked>
-                <span style="font-size: 14px; color: var(--text-secondary);">Enable sound notifications</span>
-              </label>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <label class="checkbox-label" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+                  <input type="checkbox" id="soundEnabledCheck" checked>
+                  <span style="font-size: 14px; color: var(--text-secondary);">Enable sound notifications</span>
+                </label>
+                <button id="testSoundBtn" class="btn btn-sm btn-secondary"
+                  style="padding: 4px 12px; font-size: 12px;">Test Sound</button>
+              </div>
               <label class="checkbox-label" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
                 <input type="checkbox" id="autoStartWorkCheck">
                 <span style="font-size: 14px; color: var(--text-secondary);">Auto-start work sessions</span>

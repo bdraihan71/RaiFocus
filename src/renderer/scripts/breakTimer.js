@@ -9,7 +9,10 @@ let breakTimerState = {
     remainingSeconds: 0,
     mode: 'work', // 'work', 'shortBreak', 'longBreak'
     todaySessionsCompleted: 0,
-    todayWorkTime: 0
+    todayWorkTime: 0,
+    startTime: 0,
+    initialRemainingSeconds: 0,
+    initialTodayWorkTime: 0
 };
 
 // Initialize break timer
@@ -38,6 +41,14 @@ function initializeBreakTimer() {
     const saveSettingsBtn = document.getElementById('saveSettingsBtn');
     if (saveSettingsBtn) {
         saveSettingsBtn.addEventListener('click', saveBreakTimerSettings);
+    }
+
+    // Test sound button
+    const testSoundBtn = document.getElementById('testSoundBtn');
+    if (testSoundBtn) {
+        testSoundBtn.addEventListener('click', () => {
+            playNotificationSound();
+        });
     }
 
     // Load settings from DB
@@ -170,17 +181,25 @@ function startBreakTimer() {
         }
     }
 
+    breakTimerState.startTime = Date.now();
+    breakTimerState.initialRemainingSeconds = breakTimerState.remainingSeconds;
+    breakTimerState.initialTodayWorkTime = breakTimerState.todayWorkTime;
+
     // Start countdown
     breakTimerInterval = setInterval(() => {
-        breakTimerState.remainingSeconds--;
+        const now = Date.now();
+        const elapsed = Math.floor((now - breakTimerState.startTime) / 1000);
+
+        breakTimerState.remainingSeconds = breakTimerState.initialRemainingSeconds - elapsed;
 
         if (breakTimerState.mode === 'work') {
-            breakTimerState.todayWorkTime++;
+            breakTimerState.todayWorkTime = breakTimerState.initialTodayWorkTime + elapsed;
         }
 
         updateBreakTimerDisplay();
 
         if (breakTimerState.remainingSeconds <= 0) {
+            breakTimerState.remainingSeconds = 0;
             completeBreakTimerSession();
         }
     }, 1000);
@@ -240,6 +259,11 @@ async function completeBreakTimerSession() {
             body: notificationBody,
             silent: !breakTimerSettings.soundEnabled
         });
+
+        // Play sound if enabled
+        if (breakTimerSettings.soundEnabled) {
+            playNotificationSound();
+        }
     } catch (error) {
         console.error('Error showing notification:', error);
     }
@@ -372,5 +396,14 @@ function updateSessionStats() {
     const todaySessionsEl = document.getElementById('todaySessions');
     if (todaySessionsEl) {
         todaySessionsEl.textContent = breakTimerState.todaySessionsCompleted;
+    }
+}
+
+function playNotificationSound() {
+    try {
+        const audio = new Audio('../../assets/sounds/notification.mp3');
+        audio.play().catch(e => console.error('Error playing sound:', e));
+    } catch (error) {
+        console.error('Failed to play notification sound:', error);
     }
 }
